@@ -5,3 +5,6 @@ This is my first attempt at a Golang application for my internal home automation
 
 As Go is very new to me the coding WILL be crap, but it will work !!  
 
+## Run
+
+```go run web.go json.go```
