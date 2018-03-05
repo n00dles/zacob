@@ -1,0 +1,10 @@
+{
+    "id": {
+        "name": "ledmatrix1",
+        "id": "101",
+        "typ": "switch",
+        "pin": "91234567"
+    },
+
+    "description": "Control a 12x12 LED Matrix"
+}

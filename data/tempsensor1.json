@@ -1,0 +1,10 @@
+{
+    "id": {
+        "name": "tempsensor1",
+        "id": "102",
+        "typ": "sensor",
+        "pin": "01234567"
+    },
+
+    "description": "Control a 12x12 LED Matrix"
+}
