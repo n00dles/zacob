@@ -9,6 +9,7 @@ import(
 	"encoding/json"
 	"github.com/jmoiron/jsonq"
 	"io/ioutil"
+	"fmt"
 )
 
 func getDevices(pathS string, ext string) []device {
@@ -24,10 +25,14 @@ func getDevices(pathS string, ext string) []device {
 				dec := json.NewDecoder(strings.NewReader(string(plan)))
 				dec.Decode(&data)
 				jq := jsonq.NewQuery(data)
-				id, _ := jq.String("id","id")
-				name, _ := jq.String("id","name")
-				typ, _ := jq.String("id","typ")
-				desc, _ := jq.String("description")
+				id, err := jq.String("id","id")
+				name, err := jq.String("id","name")
+				typ, err := jq.String("id","typ")
+				desc, err := jq.String("description")
+
+				if err != nil {
+					fmt.Println("Error:", err)
+				}
 				
 				d := device{
 					id: id,

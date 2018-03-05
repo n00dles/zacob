@@ -43,7 +43,7 @@ func main() {
     }
 	http.HandleFunc("/", idx)
 	http.Handle("/assets/", http.StripPrefix("/assets",http.FileServer(http.Dir("public"))))
-	http.ListenAndServe(":8080",nil)
+	//http.ListenAndServe(":8080",nil)
 	
 }
 
