@@ -35,10 +35,10 @@ func getDevices(pathS string, ext string) []device {
 				}
 				
 				d := device{
-					id: id,
-					name: name,
-					typ: typ,
-					description: desc,
+					Id: id,
+					Name: name,
+					Typ: typ,
+					Description: desc,
 				}
 				devs = append(devs, d)
 				//fmt.Println(d)

@@ -15,15 +15,18 @@ import(
 
 var tpl *template.Template
 
+var title = "Zacob v0.1"
+
 type device struct{
-	id string 
-	name string
-	typ string
-	description string
+	Id string 
+	Name string
+	Typ string
+	Description string
 }
 
-type devices struct{
-	dev []device
+type pageContent struct {
+    Devices      []device
+    Title	 string
 }
 
 func init(){
@@ -34,28 +37,20 @@ var devs = []device{}
 
 func main() {
 
-
+	// get a list of registered devices
 	devs = getDevices("./data/", ".json")
-	//fmt.Println(devs)
-	for i := range(devs) {
-        d := devs[i]
-        fmt.Println("Device:", d)
-    }
+	
 	http.HandleFunc("/", idx)
 	http.Handle("/assets/", http.StripPrefix("/assets",http.FileServer(http.Dir("public"))))
-	//http.ListenAndServe(":8080",nil)
+	http.ListenAndServe(":8080",nil)
 	
 }
 
 func idx(w http.ResponseWriter, req *http.Request){
-
-	fmt.Println(devs) 
-	type webData struct{
-		Title(string)
-		Name(string)
-	}
-	pd := webData{Title:"test", Name:"Mike"}
-	err := tpl.ExecuteTemplate(w, "index.gohtml",pd)
+	var p pageContent
+	p.Title = title
+	p.Devices = devs
+	err := tpl.ExecuteTemplate(w, "index.gohtml",p)
 	if err != nil{
 		fmt.Println(err)
 	}

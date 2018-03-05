@@ -1,18 +1,169 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ .Title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/main.css" />
-    <script src="/assets/js/main.js"></script>
-</head>
-<body>
-    <h1>{{ .Title }}</h1>
-    <h2>{{ .Name }}</h2>
-</body>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection" />
+
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+		<meta charset="utf-8"/>
+		<title>{{.Title}}</title>
+	</head>
+
+	<body>
+		<nav class="blue light-blueXXX lighten-1XXX" role="navigation" id="mc-nav">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="#" class="brand-logo">{{.Title}}</a>
+
+				<ul class="right hide-on-med-and-down">
+					<li><a href="#" class="mc-navlink" data-pane="pane1">Devices</a></li>
+					<li><a href="#" class="mc-navlink" data-pane="pane2">About</a></li>
+				</ul>
+
+				<ul id="nav-mobile" class="side-nav">
+					<li><a href="#" class="mc-navlink" data-pane="pane1">Devices</a></li>
+					<li><a href="#" class="mc-navlink" data-pane="pane2">About</a></li>
+				</ul>
+				<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+			</div>
+		</nav>
+
+		<div class="container mc_pane" id="pane0">
+			<div class="section">
+				<div class="row">
+					{{range .Devices}}
+					<div class="col s12 m6">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+						<span class="card-title">{{.Name}}</span>
+						<p>{{.Description}}</p>
+						</div>
+						<div class="card-action">
+						<div class="switch">
+                                <label>
+                                  Off
+                                  <input type="checkbox">
+                                  <span class="lever"></span>
+                                  On
+                                </label>
+                              </div>
+						<a href="#">This is a link</a>
+						<a href="#">This is a link</a>
+						</div>
+					</div>
+					</div>
+					{{end}}
+				</div>
+			</div>
+		</div>
+		
+		
+		<footer class="page-footer blue">
+			<div class="footer-copyright">
+				<div class="container">© 2018
+				<a class="grey-text text-lighten-4 right" href="https://github.com/n00dles/zacob">Project home</a>
+				</div>
+			</div>
+		</footer>
+		
+		<style type="text/css">
+			.btn_grid {
+				margin: 7px 0;
+			}
+		</style>
+	
+		<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script type="text/javascript">(function($){
+$(function(){
+	  
+	// Settings
+	var host = window.location.hostname;
+
+	var ws_url = 'ws://' + host + ':81';
+	var connection;
+	var ws_waiting = 0;
+
+	// ******************************************************************
+	// Side navigation
+	// ******************************************************************
+    $('.button-collapse').sideNav();
+	
+	// Navlinks
+	$('#mc-nav').on('click', '.mc-navlink', function(){
+		console.log("Navigate to pane: ", $(this).data("pane"));
+		showPane($(this).data("pane"));
+	});
+	
+	function showPane(pane) {
+		$('.mc_pane').addClass('hide');
+		$('#' + pane).removeClass('hide');
+		$('.button-collapse').sideNav('hide');
+		
+		if (pane == "pane2") {
+			setMainColor();
+		}
+	}
+	
+	
+	// ******************************************************************
+	// init()
+	// ******************************************************************
+	function init() {
+		console.log("Connection websockets to:", ws_url);
+		connection = new WebSocket(ws_url, ['arduino']);
+		
+	// ******************************************************************
+	// WebSocket commands
+	// ******************************************************************
+	function wsSendCommand(cmd) {
+		console.log("Send WebSocket command:", cmd);
+		if (ws_waiting == 0)  {
+			connection.send(cmd);
+			ws_waiting++;
+		} else {
+			console.log("++++++++ WS call waiting, skip")
+		}
+	}	
+		
+	//handle the touch event
+	function doTouch(event) {
+		//to not also fire on click
+		event.preventDefault();
+		var el = event.target;
+		
+		//touch position
+		var pos = {x: Math.round(event.targetTouches[0].pageX - el.offsetLeft),
+				   y: Math.round(event.targetTouches[0].pageY - el.offsetTop)};
+		//color
+		var color = context.getImageData(pos.x, pos.y, 1, 1).data;
+
+		updateStatus(pos, color);
+	}
+
+	function doClick(event) {   
+		//click position   
+		var pos = getMousePos(canvas, event);
+		//color
+		var color = context.getImageData(pos.x, pos.y, 1, 1).data;
+		
+		//console.log("click", pos.x, pos.y, color);
+		updateStatus(pos, color);
+		
+		//now do sth with the color rgbToHex(color);
+		//don't do stuff when #000000 (outside circle and lines
+	}
+
+
+	// ******************************************************************
+	// main
+	// ******************************************************************
+	init();
+	
+}); // end of document ready
+})(jQuery); // end of jQuery name space</script>
+	</body>
 </html>
-
-
-
