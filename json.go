@@ -14,6 +14,7 @@ import(
 
 func getDevices(pathS string, ext string) []device {
 	devs := []device{}
+	var d device
 
 	filepath.Walk(pathS, func(path string, f os.FileInfo, _ error) error {
 		if !f.IsDir() {
@@ -34,12 +35,11 @@ func getDevices(pathS string, ext string) []device {
 					fmt.Println("Error:", err)
 				}
 				
-				d := device{
-					Id: id,
-					Name: name,
-					Typ: typ,
-					Description: desc,
-				}
+				d.Id = id
+				d.Name = name
+				d.Typ = typ
+				d.Description = desc
+				
 				devs = append(devs, d)
 				//fmt.Println(d)
 			}
