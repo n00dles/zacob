@@ -10,12 +10,16 @@ package main
 import(
 	"fmt"
 	"html/template"
+	"golang.org/x/net/websocket"
+	"io"
 	"net/http"
 )
 
+// variable declarations
 var tpl *template.Template
-
 var title = "Zacob v0.1"
+var devs = []device{}
+
 
 type device struct{
 	Id string 
@@ -33,13 +37,19 @@ func init(){
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
 
 }
-var devs = []device{}
+
+func echoHandler(ws *websocket.Conn) {
+	io.Copy(ws, ws)
+}
 
 func main() {
 
 	// get a list of registered devices
 	devs = getDevices("./data/", ".json")
 	
+	// websocket server
+	http.Handle("/echo", websocket.Handler(echoHandler))
+
 	http.HandleFunc("/", idx)
 	http.Handle("/assets/", http.StripPrefix("/assets",http.FileServer(http.Dir("public"))))
 	http.ListenAndServe(":8080",nil)
