@@ -2,14 +2,15 @@ package main
 
 // json functions
 
-import(
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"encoding/json"
+
 	"github.com/jmoiron/jsonq"
-	"io/ioutil"
-	"fmt"
 )
 
 func getDevices(pathS string, ext string) []device {
@@ -26,20 +27,20 @@ func getDevices(pathS string, ext string) []device {
 				dec := json.NewDecoder(strings.NewReader(string(plan)))
 				dec.Decode(&data)
 				jq := jsonq.NewQuery(data)
-				id, err := jq.String("id","id")
-				name, err := jq.String("id","name")
-				typ, err := jq.String("id","typ")
+				id, err := jq.String("id", "id")
+				name, err := jq.String("id", "name")
+				typ, err := jq.String("id", "typ")
 				desc, err := jq.String("description")
 
 				if err != nil {
 					fmt.Println("Error:", err)
 				}
-				
+
 				d.Id = id
 				d.Name = name
 				d.Typ = typ
 				d.Description = desc
-				
+
 				devs = append(devs, d)
 				//fmt.Println(d)
 			}

@@ -29,16 +29,16 @@ func main() {
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func hashPassword(h []byte, p []byte) []byte {
-	hp := append(h, p...)
-	s := sha1.New()
-	s.Write(hp)
-	return s.Sum(nil)
+	hp := append(h, p...)  									// concatenate the 2 byte arrays
+	s := sha1.New() 										// create a new hash
+	s.Write(hp)												// hash hp
+	return s.Sum(nil)										// return it
 }
 
 func RandString(n int) []byte {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	b := make([]rune, n)									// create a slice b of type rune of length n
+	for i := range b {										// loop for lenght n
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]		// get a randon letter from letterRunes and add to b[]
 	}
-	return []byte(string(b))
+	return []byte(string(b))								// return it
 }
