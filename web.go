@@ -22,6 +22,11 @@ var tpl *template.Template
 var title = "Zacob v0.1"
 var devs = []device{}
 
+const (
+	STATIC_DIR = "/assets/"
+	PORT       = ":8080"
+)
+
 type device struct {
 	Id          string
 	Name        string
@@ -68,7 +73,7 @@ func main() {
 	// get a list of registered devices
 	devs = getDevices("./data/", ".json")
 
-	r := mux.NewRouter()
+	r := NewRouter()
 
 	r.HandleFunc("/", idx)
 	r.HandleFunc("/api/devices", ShowDevices).Methods("GET")
@@ -80,8 +85,19 @@ func main() {
 	// websocket server
 	http.Handle("/echo", websocket.Handler(echoHandler))
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(PORT, r))
 
+}
+
+func NewRouter() *mux.Router {
+	router := mux.NewRouter().StrictSlash(true)
+
+	// Server CSS, JS & Images Statically.
+	router.
+		PathPrefix(STATIC_DIR).
+		Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
+
+	return router
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
