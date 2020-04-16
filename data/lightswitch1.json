@@ -5,7 +5,7 @@
     "pin": "91234567",
     "ip":"192.168.0.10",
     "hash":"",
-    "active":"true",
+    "active":"0",
     "status":"0",
     "description": "Living room light switch"
 }

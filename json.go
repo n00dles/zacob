@@ -31,6 +31,13 @@ func getDevices(pathS string, ext string) []device {
 				name, err := jq.String("name")
 				typ, err := jq.String("typ")
 				desc, err := jq.String("description")
+				ip, err := jq.String("ip")
+				hash, err := jq.String("hash")
+				active, err := jq.String("active")
+				status, err := jq.String("status")
+				if typ == "switch" && status == "0" {
+					status = ""
+				}
 
 				if err != nil {
 					fmt.Println("Error:", err)
@@ -40,6 +47,10 @@ func getDevices(pathS string, ext string) []device {
 				d.Name = name
 				d.Typ = typ
 				d.Description = desc
+				d.Ip = ip
+				d.Hash = hash
+				d.Active = active
+				d.Status = status
 
 				devs = append(devs, d)
 				//fmt.Println(d)

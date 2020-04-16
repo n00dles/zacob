@@ -5,7 +5,7 @@
     "pin": "01234567",
     "ip":"192.168.0.10",
     "hash":"",
-    "active":"true",
+    "active":"1",
     "status":"0",
     "description": "Downstairs Temp sensor"
 }
