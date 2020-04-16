@@ -49,23 +49,23 @@ func echoHandler(ws *websocket.Conn) {
 }
 
 func ShowDevices(w http.ResponseWriter, r *http.Request) {
-
+	io.WriteString(w, "Show Devices\n")
 }
 
 func GetDevice(w http.ResponseWriter, r *http.Request) {
-
+	io.WriteString(w, "Get Device\n")
 }
 
 func CreateDevice(w http.ResponseWriter, r *http.Request) {
-
+	io.WriteString(w, "Create Device\n")
 }
 
 func UpdateDevice(w http.ResponseWriter, r *http.Request) {
-
+	io.WriteString(w, "Update Device\n")
 }
 
 func DeleteDevice(w http.ResponseWriter, r *http.Request) {
-
+	io.WriteString(w, "Delete Device\n")
 }
 
 func main() {
