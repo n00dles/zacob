@@ -14,7 +14,8 @@ import (
 )
 
 func getDevices(pathS string, ext string) []device {
-	devs := []device{}
+	devs = nil
+
 	var d device
 
 	filepath.Walk(pathS, func(path string, f os.FileInfo, _ error) error {

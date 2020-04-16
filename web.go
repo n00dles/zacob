@@ -20,6 +20,7 @@ import (
 // variable declarations
 var tpl *template.Template
 var title = "Zacob v0.1"
+
 var devs = []device{}
 
 const (
