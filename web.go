@@ -85,7 +85,7 @@ func main() {
 	r.HandleFunc("/api/devices/{id}", DeleteDevice).Methods("DELETE")
 
 	// websocket server
-	http.Handle("/echo", websocket.Handler(echoHandler))
+	r.Handle("/echo/", websocket.Handler(echoHandler))
 
 	log.Fatal(http.ListenAndServe(":"+PORT, r))
 

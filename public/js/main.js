@@ -5,7 +5,7 @@
         var host = window.location.hostname;
     
     
-        var ws_url = 'ws://localhost:8080/echo';
+        var ws_url = 'ws://localhost:8080/echo/';
         var connection;
         var ws_waiting = 0;
     
