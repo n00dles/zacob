@@ -35,9 +35,6 @@ func getDevices(pathS string, ext string) []device {
 				hash, err := jq.String("hash")
 				active, err := jq.String("active")
 				status, err := jq.String("status")
-				if typ == "switch" && status == "0" {
-					status = ""
-				}
 
 				if err != nil {
 					fmt.Println("Error:", err)
