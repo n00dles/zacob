@@ -1,8 +1,11 @@
 {
-
     "name": "lightswitch2",
     "id": "101",
     "typ": "switch",
     "pin": "91234567",
+    "ip":"192.168.0.10",
+    "hash":"",
+    "active":"true",
+    "status":"0",
     "description": "Kitchen light switch"
 }
