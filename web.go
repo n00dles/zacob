@@ -92,6 +92,9 @@ func main() {
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
+	// get a list of registered devices
+	devs = getDevices("./data/", ".json")
+
 	var p pageContent
 	p.Title = title
 	p.Devices = devs
