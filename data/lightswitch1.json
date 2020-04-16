@@ -1,10 +1,7 @@
 {
-    "id": {
-        "name": "lightswitch1",
-        "id": "101",
-        "typ": "switch",
-        "pin": "91234567"
-    },
-
+    "name": "lightswitch1",
+    "id": "101",
+    "typ": "switch",
+    "pin": "91234567",
     "description": "Living room light switch"
 }

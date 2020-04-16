@@ -27,9 +27,9 @@ func getDevices(pathS string, ext string) []device {
 				dec := json.NewDecoder(strings.NewReader(string(plan)))
 				dec.Decode(&data)
 				jq := jsonq.NewQuery(data)
-				id, err := jq.String("id", "id")
-				name, err := jq.String("id", "name")
-				typ, err := jq.String("id", "typ")
+				id, err := jq.String("id")
+				name, err := jq.String("name")
+				typ, err := jq.String("typ")
 				desc, err := jq.String("description")
 
 				if err != nil {

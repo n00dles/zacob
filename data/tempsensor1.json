@@ -1,10 +1,7 @@
 {
-    "id": {
-        "name": "tempsensor1",
-        "id": "102",
-        "typ": "sensor",
-        "pin": "01234567"
-    },
-
+    "name": "tempsensor1",
+    "id": "102",
+    "typ": "sensor",
+    "pin": "01234567",
     "description": "Downstairs Temp sensor"
 }
