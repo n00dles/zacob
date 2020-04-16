@@ -28,10 +28,14 @@ const (
 )
 
 type device struct {
-	Id          string
-	Name        string
-	Typ         string
-	Description string
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Typ         string `json:"type"`
+	Description string `json:"description"`
+	Ip          string `json:"ip"`
+	Hash        string `json:"hash"`
+	Active      string `json:"active"`
+	Status      string `json:"status"`
 }
 
 type pageContent struct {
@@ -41,7 +45,6 @@ type pageContent struct {
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
-
 }
 
 func echoHandler(ws *websocket.Conn) {
