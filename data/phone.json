@@ -1,0 +1,11 @@
+{
+    "name": "phone",
+    "id": "4",
+    "typ": "phone",
+    "pin": "01234567",
+    "ip":"192.168.0.37",
+    "hash":"",
+    "active":"1",
+    "status":"0",
+    "description": "My Phone"
+}
