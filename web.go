@@ -29,6 +29,7 @@ type config struct {
 	Version   string `json:"version"`
 	Port      string `json:"port"`
 	Staticdir string `json:"staticdir"`
+	Debug     bool   `json:"debug"`
 }
 
 type device struct {
@@ -118,15 +119,18 @@ func main() {
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
-	if loggedIn {
-		var p pageContent
-		p.Title = app.Name + " " + app.Version
-		p.Devices = devs
-		err := tpl.ExecuteTemplate(w, "index.gohtml", p)
-		if err != nil {
-			fmt.Println(err)
-		}
-	} else {
-		http.Redirect(w, req, "/login", http.StatusMovedPermanently)
+	if app.Debug == true {
+		tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
 	}
+	//if loggedIn == true {
+	var p pageContent
+	p.Title = app.Name + " " + app.Version
+	p.Devices = devs
+	err := tpl.ExecuteTemplate(w, "index.gohtml", p)
+	if err != nil {
+		fmt.Println(err)
+	}
+	//} else {
+	//	http.Redirect(w, req, "/login", http.StatusMovedPermanently)
+	//}
 }
