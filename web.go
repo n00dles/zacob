@@ -112,11 +112,8 @@ func main() {
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
-	// get a list of registered devices
-	devs = getDevices("./data/", ".json")
-
 	var p pageContent
-	p.Title = title
+	p.Title = app.Name + " " + app.Version
 	p.Devices = devs
 	err := tpl.ExecuteTemplate(w, "index.gohtml", p)
 	if err != nil {
