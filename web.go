@@ -81,6 +81,11 @@ func DeleteDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Delete Device\n")
 }
 
+// DoLogin Login page if not quthenticated
+func DoLogin(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Login Page\n")
+}
+
 func init() {
 	fmt.Println(app.Name + " " + app.Version)
 	if loggedIn {
@@ -98,6 +103,7 @@ func main() {
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("."+app.Staticdir))))
 
 	r.HandleFunc("/", idx)
+	r.HandleFunc("/login", DoLogin).Methods("GET", "POST")
 	r.HandleFunc("/devices", ShowDevices).Methods("GET")
 	r.HandleFunc("/devices/{id}", GetDevice).Methods("GET")
 	r.HandleFunc("/devices", CreateDevice).Methods("POST")
@@ -112,11 +118,15 @@ func main() {
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
-	var p pageContent
-	p.Title = app.Name + " " + app.Version
-	p.Devices = devs
-	err := tpl.ExecuteTemplate(w, "index.gohtml", p)
-	if err != nil {
-		fmt.Println(err)
+	if loggedIn {
+		var p pageContent
+		p.Title = app.Name + " " + app.Version
+		p.Devices = devs
+		err := tpl.ExecuteTemplate(w, "index.gohtml", p)
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		http.Redirect(w, req, "/login", http.StatusMovedPermanently)
 	}
 }
