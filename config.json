@@ -1,0 +1,6 @@
+{
+    "name":"Zacob",
+    "version":"1.0",
+    "port":"8081",
+    "staticdir":"/public/"
+}

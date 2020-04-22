@@ -9,6 +9,11 @@ import (
 	"path/filepath"
 )
 
+func getConfig() {
+	jsondata, _ := ioutil.ReadFile("config.json")
+	json.Unmarshal(jsondata, &app)
+}
+
 func getDevices(pathS string, ext string) []device {
 	devs = nil
 

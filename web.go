@@ -20,13 +20,21 @@ import (
 // variable declarations
 var tpl *template.Template
 var title = "Zacob v0.1"
-
+var loggedIn = true
 var devs = []device{}
+var app config
 
 const (
 	STATIC_DIR = "/public/"
 	PORT       = "8080"
 )
+
+type config struct {
+	Name      string `json:"name"`
+	Version   string `json:"version"`
+	Port      string `json:"port"`
+	Staticdir string `json:"staticdir"`
+}
 
 type device struct {
 	Id          string `json:"id"`
@@ -46,6 +54,7 @@ type pageContent struct {
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
+	getConfig()
 }
 
 func echoHandler(ws *websocket.Conn) {
@@ -72,6 +81,13 @@ func DeleteDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Delete Device\n")
 }
 
+func init() {
+	fmt.Println(app.Name + " " + app.Version)
+	if loggedIn {
+		fmt.Println("authenticated")
+	}
+}
+
 func main() {
 
 	// get a list of registered devices
@@ -79,19 +95,19 @@ func main() {
 
 	r := mux.NewRouter()
 
-	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./public/"))))
+	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("."+app.Staticdir))))
 
 	r.HandleFunc("/", idx)
-	r.HandleFunc("/api/devices", ShowDevices).Methods("GET")
-	r.HandleFunc("/api/devices/{id}", GetDevice).Methods("GET")
-	r.HandleFunc("/api/devices", CreateDevice).Methods("POST")
-	r.HandleFunc("/api/devices/{id}", UpdateDevice).Methods("PUT")
-	r.HandleFunc("/api/devices/{id}", DeleteDevice).Methods("DELETE")
+	r.HandleFunc("/devices", ShowDevices).Methods("GET")
+	r.HandleFunc("/devices/{id}", GetDevice).Methods("GET")
+	r.HandleFunc("/devices", CreateDevice).Methods("POST")
+	r.HandleFunc("/devices/{id}", UpdateDevice).Methods("PUT")
+	r.HandleFunc("/devices/{id}", DeleteDevice).Methods("DELETE")
 
 	// websocket server
 	r.Handle("/echo/", websocket.Handler(echoHandler))
 
-	log.Fatal(http.ListenAndServe(":"+PORT, r))
+	log.Fatal(http.ListenAndServe(":"+app.Port, r))
 
 }
 
