@@ -24,11 +24,6 @@ var loggedIn = true
 var devs = []device{}
 var app config
 
-const (
-	STATIC_DIR = "/public/"
-	PORT       = "8080"
-)
-
 type config struct {
 	Name      string `json:"name"`
 	Version   string `json:"version"`
@@ -37,11 +32,11 @@ type config struct {
 }
 
 type device struct {
-	Id          string `json:"id"`
+	ID          string `json:"id"`
 	Name        string `json:"name"`
 	Typ         string `json:"type"`
 	Description string `json:"description"`
-	Ip          string `json:"ip"`
+	IP          string `json:"ip"`
 	Hash        string `json:"hash"`
 	Active      string `json:"active"`
 	Status      string `json:"status"`
@@ -61,22 +56,27 @@ func echoHandler(ws *websocket.Conn) {
 	io.Copy(ws, ws)
 }
 
+// ShowDevices Show all devices
 func ShowDevices(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Show Devices\n")
 }
 
+// GetDevice Get a single device
 func GetDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Get Device\n")
 }
 
+// CreateDevice Create a new device
 func CreateDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Create Device\n")
 }
 
+// UpdateDevice Update a device
 func UpdateDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Update Device\n")
 }
 
+// DeleteDevice Delete a device
 func DeleteDevice(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Delete Device\n")
 }
